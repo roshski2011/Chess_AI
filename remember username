@@ -1,0 +1,18 @@
+import os
+
+# Define the filename where the username will be stored
+filename = "username.txt"
+
+# Check if the username file exists
+if os.path.exists(filename):
+    # Read the stored username
+    with open(filename, "r") as file:
+        username = file.read().strip()
+    print(f"Welcome back, {username}!")
+else:
+    # Ask the player for their username
+    username = input("username: ")
+    # Save the username to the file
+    with open(filename, "w") as file:
+        file.write(username)
+    print(f"Welcome, {username}! Your username has been saved.")
