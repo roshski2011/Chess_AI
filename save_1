@@ -1,0 +1,84 @@
+from xml.dom.minidom import CharacterData
+
+print ("Hello player! Ready to play chess? I am! but first, What is your username?")
+
+
+
+#remembering the username
+
+import os
+
+# Define the filename where the username will be stored
+filename = "username.txt"
+
+# Check if the username file exists
+if os.path.exists(filename):
+    # Read the stored username
+    with open(filename, "r") as file:
+        username = file.read().strip()
+    print(f"Welcome back, {username}!")
+else:
+    # Ask the player for their username
+    username = input("username: ")
+    # Save the username to the file
+    with open(filename, "w") as file:
+        file.write(username)
+    print(f"Welcome, {username}! Your username has been saved.")
+    
+
+
+
+
+#figure out skill level
+
+print ("How advanced would you like to play?")
+#what level would they like to play at
+print ("Beginner, Intermediate, Hard, Expert, Grandmaster?")
+level_of_expertise = input ("").strip().lower() # Normalize input for less confusion
+
+
+
+#computer bases name on expertise and the game starts
+
+
+#beginner chess
+
+if level_of_expertise == "beginner":
+    print ("My name is ChessRookie")
+    print ("let's play!")
+    white_or_black = input("White or Black? ").strip().lower()
+    if white_or_black == "white":
+        game = input ("Your move: ")
+    
+    
+elif level_of_expertise == "intermediate":
+    print ("My name is SkilledContender")
+    
+    
+    
+    
+elif level_of_expertise == "hard":
+    print ("My name is WorthyOpponent")
+    
+    
+    
+    
+elif level_of_expertise == "expert":
+    print ("MasterStrategist")
+    
+    
+    
+    
+elif level_of_expertise == "grandmaster":
+    print ("UltimateChampion")
+    
+    
+    
+    
+    
+    
+else:
+    print ("I'm sorry, but that option is unavailable. If you want help or have suggestions, speak to our manager!")
+    
+    
+
