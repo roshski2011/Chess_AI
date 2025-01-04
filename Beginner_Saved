@@ -1,0 +1,103 @@
+import os
+import chess
+import random
+
+# Remembering the username
+filename = "username.txt"
+
+if os.path.exists(filename):
+    with open(filename, "r") as file:
+        username = file.read().strip()
+    print(f"Welcome back, {username}!")
+else:
+    username = input("What is your username?: ").strip()
+    with open(filename, "w") as file:
+        file.write(username)
+    print(f"Welcome, {username}! Your username has been saved.")
+
+# Display skill level options
+print("How advanced would you like to play?")
+print("Beginner, Intermediate, Hard, Expert, Grandmaster?")
+level_of_expertise = input("").strip().lower()
+
+board = chess.Board()  # This must be defined before using `board` in functions
+
+# Define common functions
+def print_board(board):
+    """Display the current chess board."""
+    print(board)
+
+def rookie_move(board):
+    """Make a bad move as the rookie computer."""
+    legal_moves = list(board.legal_moves)
+    return random.choice(legal_moves)
+
+# Chess game for beginner level
+if level_of_expertise == "beginner":
+    print("My name is ChessRookie. Let's play!")
+    white_or_black = input("White or Black? ").strip().lower()
+
+    board = chess.Board()
+
+    if white_or_black == "white":
+        print("You are white, and I am black.")
+    elif white_or_black == "black":
+        print("You are black, and I am white.")
+    else:
+        print("Invalid choice. Defaulting to white.")
+        white_or_black = "white"
+
+    print("Input your moves in standard algebraic notation (e.g., e2e4). Type 'forfeit' to give up.")
+
+    while not board.is_game_over():
+        print_board(board)
+
+        if white_or_black == "white" or board.turn == chess.WHITE:
+            player_move = input("Your move: ").strip()
+            if player_move.lower() == "forfeit":
+                print("You forfeited. The computer wins!")
+                break
+
+            try:
+                move = chess.Move.from_uci(player_move)
+                if move in board.legal_moves:
+                    board.push(move)
+                else:
+                    print("Illegal move. Try again.")
+                    continue
+            except ValueError:
+                print("Invalid move format. Use standard notation (e.g., e2e4). Try again.")
+                continue
+
+        if board.is_game_over():
+            break
+
+        # Computer's move
+        computer_move = rookie_move(board)
+        print(f"Computer moves: {computer_move}")
+        board.push(computer_move)
+
+    print_board(board)
+    if board.is_checkmate():
+        if board.turn == chess.WHITE:
+            print("Checkmate! The computer wins!")
+        else:
+            print("Checkmate! You win!")
+    elif board.is_stalemate():
+        print("Stalemate! It's a draw.")
+    elif board.is_insufficient_material():
+        print("Draw due to insufficient material.")
+    else:
+        print("Game over!")
+
+# Messages for other skill levels
+elif level_of_expertise == "intermediate":
+    print("My name is SkilledContender. (Game logic not implemented yet.)")
+elif level_of_expertise == "hard":
+    print("My name is WorthyOpponent. (Game logic not implemented yet.)")
+elif level_of_expertise == "expert":
+    print("My name is MasterStrategist. (Game logic not implemented yet.)")
+elif level_of_expertise == "grandmaster":
+    print("My name is UltimateChampion. (Game logic not implemented yet.)")
+else:
+    print("I'm sorry, but that option is unavailable. If you want help or have suggestions, speak to our manager!")
